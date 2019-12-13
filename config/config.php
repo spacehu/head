@@ -15,8 +15,11 @@ define('MANAGE_TEMPLATE', './template');
 define('ERROR_405', './index.php?a=admin&m=error&message=405');
 define('ERROR_404', './index.php?a=admin&m=error&message=404');
 /** cli 配置信息 */
-define('APP_SRC', '/var/www/head');
-
+if(ENV=='local'){
+    define('APP_SRC', '/var/www/head');
+}else if(ENV=='prod'){
+    define('APP_SRC', '/var/www/html/api_head');
+}
 
 
 return $config = [
