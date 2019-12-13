@@ -36,6 +36,7 @@ $class = \action\siteInfomation::$data['class'];
                     <td class="td1" >姓名</td>
                     <td class="td1" >城市</td>
                     <td class="td1" >内容</td>
+                    <td class="td1" >状态</td>
                     <td class="td1" width="20%">录入时间</td>
                     <td class="td1" width="9%">操作</td>
                 </tr>
@@ -48,6 +49,7 @@ $class = \action\siteInfomation::$data['class'];
                             <td class="td1"><?php echo $v['name']; ?></td>
                             <td class="td1"><?php echo $v['city']; ?></td>
                             <td class="td1"><?php echo $v['value']; ?></td>
+                            <td class="td1"><?php echo ($v['status']==0)?"未审核":"通过审核"; ?></td>
                             <td class="td1"><?php echo $v['add_time']; ?></td>
                             <td class="td1">
                                 <a href="index.php?a=<?php echo $class; ?>&m=updateCustomer&id=<?php echo $v['id']; ?>&status=1">通过</a>

@@ -75,7 +75,7 @@ class siteInfomation {
         try {
             if($id!=null){
                 $_data = [
-                    'status' => $_POST['status'],
+                    'status' => $_GET['status'],
                 ];
                 self::$data = SiteInfomationDAL::update($id,$_data);
             }
