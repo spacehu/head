@@ -28,6 +28,8 @@ class RpcClient {
     public function __construct()
     {
         $url="192.168.31.189:12345";
+        $this->url=\mod\init::$config['env']['socket']['client']['ip'];
+        $this->port=\mod\init::$config['env']['socket']['client']['port'];
         $this->urlInfo = parse_url($url);
         LogDAL::save(date("Y-m-d H:i:s") . "-start", "cli");
     }

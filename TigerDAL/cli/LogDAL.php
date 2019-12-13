@@ -41,7 +41,7 @@ class LogDAL {
 
     public static function _save($str, $filename = 'log') {
         $logPath = APP_SRC . \mod\init::$config['env']['logPath'] . '/';
-        echo $logPath;
+        //echo $logPath;
         if (!is_dir($logPath)) {
             mkdir($logPath, 0777);
         }
