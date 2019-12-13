@@ -6,6 +6,7 @@ use mod\common as Common;
 use TigerDAL;
 use TigerDAL\Cms\SiteInfomationDAL;
 use TigerDAL\Cms\EnterpriseDAL;
+use TigerDAL\cli\MessageQueueDAL;
 use config\code;
 
 class siteInfomation {
@@ -78,6 +79,17 @@ class siteInfomation {
                     'status' => $_GET['status'],
                 ];
                 self::$data = SiteInfomationDAL::update($id,$_data);
+                if($_GET['status']==1){
+                    $row=SiteInfomationDAL::getOne($id);
+                    $_mq=[
+                        'type'=>'rpc',
+                        'name'=>$row['sub_type'],
+                        'value'=>json_encode(["action"=>"RpcClient","method"=>"","name"=>$row['name'],"city"=>$row['city'],"value"=>$row['value']]),
+                        'add_time'=>date("Y-m-d H:i:s"),
+                        'status'=>0,
+                    ];
+                    MessageQueueDAL::insert($_mq);
+                }
             }
             if (self::$data) {
                 //Common::pr(Common::getSession($this->class));die;

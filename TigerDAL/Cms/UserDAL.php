@@ -62,6 +62,8 @@ class UserDAL {
             foreach ($data as $v) {
                 if (is_numeric($v)) {
                     $_data[] = " " . $v . " ";
+                } else if (empty($v)) {
+                    $_data[] = " null ";
                 } else {
                     $_data[] = " '" . $v . "' ";
                 }

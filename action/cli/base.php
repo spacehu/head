@@ -6,6 +6,7 @@ use mod\common as Common;
 use TigerDAL\cli\UserDAL;
 use TigerDAL\MailDAL;
 use TigerDAL\cli\LogDAL;
+use TigerDAL\cli\MessageQueueDAL;
 use config\code;
 
 class base extends \action\RestfulApi {
@@ -50,4 +51,30 @@ class base extends \action\RestfulApi {
         }
     }
 
+    /** 向企业管理员发送邮件的方法 */
+    function checkMQ() {
+        try {
+            $_mq = MessageQueueDAL::getAll();
+            if (!empty($_userList)) {
+                $_mail = new MailDAL();
+                $fromInfo = UserDAL::getConfig();
+                foreach ($_userList as $k => $v) {
+                    // 根据userid拉取数据
+                    //$maildetail = UserDAL::getData($v['id']);
+                    $maildetail = [
+                        "subject" => "Dear " . $v['name'] . ". ",
+                        "body" => !empty($v['mail_content'])?$v['mail_content']:\mod\init::$config['mail']['detail'],
+                        "user_email" => $v['email'],
+                        "user_name" => $v['name'],
+                    ];
+                    $os_base[]=$maildetail;
+                    $os[]=$_mail->mailTo($fromInfo, $maildetail);
+                }
+                LogDAL::save(date("Y-m-d H:i:s") . "-base-".json_encode($os_base), "cli");
+                LogDAL::save(date("Y-m-d H:i:s") . "-res-".json_encode($os), "cli");
+            }
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::HOME_INDEX], code::HOME_INDEX, json_encode($ex));
+        }
+    }
 }

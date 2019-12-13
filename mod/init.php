@@ -631,17 +631,19 @@ class init {
     /** 计划任务 *************************************************************************************** */
 
     /** 启动项 */
-    public function cli() {
-        /** 初始化系统类 */
-        $this->magicFunction();
-        /** 判断语言 */
-        $this->setLanguage(self::$config['language']['key']);
+    public function cli($action,$mod) {
+        $action = 'action\\cli\\' .$action;
+        $act = new $action();
+        //$actEval = "\$act = new " . $action . "();";
 
-        // 发送邮件
-        $act = new \action\cli\base();
-        $act->userEmail();
+        //Common::pr($actEval);die;
+        //eval($actEval);
+        if (isset($mod)) {
+            //$actEval = "\$act ->" . $mod . "();";
+            //eval($actEval);
+            $act->$mod();
+        }
 
-        $this->afterRun();
     }
 
 }
