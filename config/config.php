@@ -127,6 +127,9 @@ return $config = [
             'GET /v4/ApiExamination-examinations.htm' => 'v4-ApiExamination-examinations', //获取考卷列表
             'GET /v4/ApiExamination-examination.htm' => 'v4-ApiExamination-examination', //获取考卷详情
             'GET /cli/base-userEmail.htm' => 'cli-base-userEmail', //执行邮件服务
+            /** v5 */
+            'POST /v5/SiteInfomation-add.htm' => 'v5-SiteInfomation-add', //获取前端用户提交的站内信息
+            
         ]
     ],
     'debug' => false, //调试器
@@ -153,6 +156,10 @@ return $config = [
         'customer' => [
             'title' => '客户',
             'url' => 'index.php?a=customer&m=index',
+        ],
+        'siteInfomation' => [
+            'title' => '站内讯息',
+            'url' => 'index.php?a=siteInfomation&m=index',
         ],
         'material' => [
             'title' => '素材',
