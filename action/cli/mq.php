@@ -34,7 +34,7 @@ class mq {
                         $row= array(
                             'name'=>$obj['name'],
                             'city'=>$obj['city'],
-                            'value'=>$obj['type'].'[|]'.$obj['name'].'[|]'.$obj['city'].'[|]'.$obj['value'],
+                            'value'=>$v['name'].'[|]'.$obj['name'].'[|]'.$obj['city'].'[|]'.$obj['value'],
                         );
                         
                         $rpc=new RpcClient();
