@@ -39,6 +39,7 @@ class mq {
                         
                         $rpc=new RpcClient();
                         $input=$rpc->client($row);
+                        LogDAL::save(date("Y-m-d H:i:s") . "-$input", "cli");
                         //echo $input;die;
                         if($input==$row['value']){
                             $_data['status']=1;

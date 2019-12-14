@@ -60,9 +60,11 @@ class RpcClient {
         $str=$this->data($name,$arguments[0]);
         //var_dump($str);die;
         $back=socket_write($socket,$str,strlen($str));
+        LogDAL::save(date("Y-m-d H:i:s") . "-$back", "cli");
         //echo $back;
         if($back!=0){
             $input = socket_read($socket,1024);
+            LogDAL::save(date("Y-m-d H:i:s") . "-$input", "cli");
             socket_close ($socket);    
             return $input;
         }else{
