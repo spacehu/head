@@ -40,6 +40,14 @@ class admin {
 
     function main_left() {
         Common::isset_cookie();
+        $id = Common::getSession("id");
+        $user = UserDAL::getOne($id);
+        $role = RoleDAL::getOne($user['role_id']);
+        $_role='';
+        if(!empty($role)){
+            $_role=explode(";",$role['data']);
+        }
+        self::$data['role']=$_role;
         self::$data['data']=\mod\init::$config['leftMenu'];
         \mod\init::getTemplate('admin', 'left', false);
     }

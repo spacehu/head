@@ -1,5 +1,6 @@
 <?php 
 $data = \action\admin::$data['data'];
+$role = \action\admin::$data['role'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -38,17 +39,21 @@ $data = \action\admin::$data['data'];
             <!-- 企业管理员模块 -->
             <?php if(!empty($data)){?>
                 <?php foreach($data as $k=>$v){?>
-                    <div class="title">
-                        <a class="first" <?php if(!empty($v['url'])){?>onclick="javascript:parent.mainFrame.location.href = '<?php echo $v['url'];?>'"<?php }?> href="javascript:void(0);" ><?php echo $v['title'];?></a>
-                    </div>
-                    <?php if(!empty($v['subMenu'])){?>
-                        <div class="sub_title">
-                            <?php foreach($v['subMenu'] as $key=>$val){?>
-                                <div class="title">
-                                    <a class="second" <?php if(!empty($val['url'])){?>onclick="javascript:parent.mainFrame.location.href = '<?php echo $val['url'];?>'"<?php }?> href="javascript:void(0);" ><?php echo $val['title'];?></a>
-                                </div>
-                            <?php }?>
+                    <?php if(in_array($k,$role)){?>
+                        <div class="title">
+                            <a class="first" <?php if(!empty($v['url'])){?>onclick="javascript:parent.mainFrame.location.href = '<?php echo $v['url'];?>'"<?php }?> href="javascript:void(0);" ><?php echo $v['title'];?></a>
                         </div>
+                        <?php if(!empty($v['subMenu'])){?>
+                            <div class="sub_title">
+                                <?php foreach($v['subMenu'] as $key=>$val){?>
+                                    <?php if(in_array($key,$role)){?>
+                                        <div class="title">
+                                            <a class="second" <?php if(!empty($val['url'])){?>onclick="javascript:parent.mainFrame.location.href = '<?php echo $val['url'];?>'"<?php }?> href="javascript:void(0);" ><?php echo $val['title'];?></a>
+                                        </div>
+                                    <?php }?>
+                                <?php }?>
+                            </div>
+                        <?php }?>
                     <?php }?>
                 <?php }?>
             <?php }?>
