@@ -84,7 +84,7 @@ class siteInfomation {
                     $_mq=[
                         'type'=>'rpc',
                         'name'=>$row['sub_type'],
-                        'value'=>json_encode(["action"=>"RpcClient","method"=>"","name"=>$row['name'],"city"=>$row['city'],"value"=>$row['value']]),
+                        'value'=>json_encode(["action"=>"RpcClient","method"=>"","name"=>$row['name'],"city"=>$row['city'],"value"=>$row['value']],JSON_UNESCAPED_UNICODE),
                         'add_time'=>date("Y-m-d H:i:s"),
                         'status'=>0,
                     ];
