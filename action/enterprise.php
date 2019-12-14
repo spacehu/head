@@ -69,6 +69,8 @@ class enterprise {
                     'usercode' => isset($_POST['usercode']) ? $_POST['usercode'] : "",
                     'phone' => $_POST['phone'],
                     'address' => $_POST['address'],
+                    'appid' => $_POST['appid'],
+                    'secret' => $_POST['secret'],
                 ];
                 self::$data = EnterpriseDAL::update($id, $data);
             } else {
@@ -91,6 +93,8 @@ class enterprise {
                     'phone' => $_POST['phone'],
                     'address' => $_POST['address'],
                     'user_id' => 0,
+                    'appid' => $_POST['appid'],
+                    'secret' => $_POST['secret'],
                 ];
                 self::$data = EnterpriseDAL::insert($data);
             }

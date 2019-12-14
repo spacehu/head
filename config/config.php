@@ -132,9 +132,12 @@ return $config = [
             'GET /cli/base-userEmail.htm' => 'cli-base-userEmail', //执行邮件服务
             /** v5 for head & sign */
             'POST /v5/SiteInfomation-add.htm' => 'v5-SiteInfomation-add', //获取前端用户提交的站内信息
+            'POST /v5/Sign-add.htm' => 'v5-Sign-add', //获取前端用户提交的站内信息
             /** v6 */
-            'GET /v6/ApiSms-sendRegistSms.htm' => 'v6-ApiSms-sendRegistSms', //发验证码 Tencent
-            'GET /v6/ApiSms-sendSms.htm' => 'v6-ApiSms-sendSms', //发验证码 Tencent
+            'POST /v6/ApiSms-sendSms.htm' => 'v6-ApiSms-sendSms', //发验证码 LinYu
+            'GET /v6/ApiSms-getSms.htm' => 'v6-ApiSms-getSms', //获取短信供应商信息 LinYu
+            'GET /v6/ApiWeChat-getWeChatInfo.htm' => 'v6-ApiWeChat-getWeChatInfo', //需要用户主动授权
+            'GET /v6/ApiWeChat-getWeChatOpenId.htm' => 'v6-ApiWeChat-getWeChatOpenId', //静默授权
 
             
         ]

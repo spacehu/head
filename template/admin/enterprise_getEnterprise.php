@@ -48,6 +48,18 @@ $list = \action\enterprise::$data['list'];
                         <div class="leftAlist" >
                             <input class="text" name="address" type="text" value="<?php echo isset($data['address']) ? $data['address'] : ""; ?>" /><span class="red"> * </span>
                         </div>
+                        <div class="leftAlist" >
+                            <span>APPID 微信APPID</span>
+                        </div>
+                        <div class="leftAlist" >
+                            <input class="text" name="appid" type="text" value="<?php echo isset($data['appid']) ? $data['appid'] : ""; ?>" /><span class="red"> * </span>
+                        </div>
+                        <div class="leftAlist" >
+                            <span>SECRET 微信SECRET</span>
+                        </div>
+                        <div class="leftAlist" >
+                            <input class="text" name="secret" type="text" value="<?php echo isset($data['secret']) ? $data['secret'] : ""; ?>" /><span class="red"> * </span>
+                        </div>
                     </div>
                 </div>
                 <div class="pathB">

@@ -31,16 +31,24 @@ class mq {
                 if(!empty($_mq)){
                     foreach($_mq as $k=>$v){
                         $obj=(array)json_decode($v['value']);
-                        $row= array(
-                            'name'=>$obj['name'],
-                            'city'=>$obj['city'],
-                            'value'=>$v['name'].'[|]'.$obj['name'].'[|]'.$obj['city'].'[|]'.$obj['value'],
-                        );
+                        if($v['name']=='blessing'){
+                            $row= array(
+                                'name'=>$obj['name'],
+                                'city'=>$obj['city'],
+                                'value'=>$v['name'].'[|]'.$obj['name'].'[|]'.$obj['city'].'[|]'.$obj['value'],
+                            );
+                        }else if($v['name']=='sign'){
+                            $row= array(
+                                'name'=>$obj['name'],
+                                'city'=>'',
+                                'value'=>$v['name'].'[|]'.$obj['name'],
+                            );
+                        }
                         
                         $rpc=new RpcClient();
                         $input=$rpc->client($row);
                         LogDAL::save(date("Y-m-d H:i:s") . "-$input", "cli");
-                        //echo $input;die;
+                        echo $input;
                         if($input==$row['value']){
                             $_data['status']=1;
                             MessageQueueDAL::update($v['id'],$_data);

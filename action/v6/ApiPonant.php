@@ -4,14 +4,11 @@ namespace action\v6;
 
 use mod\common as Common;
 use TigerDAL;
-use TigerDAL\Api\LinYuSmsDAL;
-use TigerDAL\Api\AuthDAL;
 use TigerDAL\AccessDAL;
 use config\code;
-use TigerDAL\Web\StatisticsDAL;
 use TigerDAL\Api\LogDAL;
 
-class ApiSms extends \action\RestfulApi {
+class ApiPonant extends \action\RestfulApi {
 
     /**
      * 主方法引入父类的基类
