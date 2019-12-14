@@ -48,8 +48,8 @@ return $config = [
             /* public api */
             'GET /v1/ApiSystem-saveip.htm' => 'v1-ApiSystem-saveip',
             'GET /v1/ApiEnum-getRegion.htm' => 'v1-ApiEnum-getRegion',
-            'GET /v1/ApiSms-sendSms.htm' => 'v1-ApiSms-sendSms',
-            'GET /v1/ApiSms-sendRegistSms.htm' => 'v1-ApiSms-sendRegistSms',
+            'GET /v1/ApiSms-sendSms.htm' => 'v1-ApiSms-sendSms',// 阿里
+            'GET /v1/ApiSms-sendRegistSms.htm' => 'v1-ApiSms-sendRegistSms', // 阿里
             'GET /v2/ApiEnum-getRegion.htm' => 'v2-ApiEnum-getRegion',
             /* system api */
             'GET /v2/ApiHome-getCategory.htm' => 'v2-ApiHome-getCategory',
@@ -87,8 +87,8 @@ return $config = [
             'GET /v1/ApiApplets-photo.htm' => 'v1-ApiApplets-photo',
             'POST /v1/ApiApplets-saveWeChatInfo.htm' => 'v1-ApiApplets-saveWeChatInfo',
             /** v4 for plbs */
-            'GET /v4/ApiSms-sendRegistSms.htm' => 'v4-ApiSms-sendRegistSms', //发验证码
-            'GET /v4/ApiSms-sendSms.htm' => 'v4-ApiSms-sendSms', //发验证码
+            'GET /v4/ApiSms-sendRegistSms.htm' => 'v4-ApiSms-sendRegistSms', //发验证码 Tencent
+            'GET /v4/ApiSms-sendSms.htm' => 'v4-ApiSms-sendSms', //发验证码 Tencent
             'POST /v4/ApiAuth-checkPhone.htm' => 'v4-ApiAuth-checkPhone', //检查手机号是否已用
             'POST /v4/ApiAuth-register.htm' => 'v4-ApiAuth-register', //注册
             'POST /v4/ApiAuth-login.htm' => 'v4-ApiAuth-login', //登录
@@ -130,8 +130,12 @@ return $config = [
             'GET /v4/ApiExamination-examinations.htm' => 'v4-ApiExamination-examinations', //获取考卷列表
             'GET /v4/ApiExamination-examination.htm' => 'v4-ApiExamination-examination', //获取考卷详情
             'GET /cli/base-userEmail.htm' => 'cli-base-userEmail', //执行邮件服务
-            /** v5 */
+            /** v5 for head & sign */
             'POST /v5/SiteInfomation-add.htm' => 'v5-SiteInfomation-add', //获取前端用户提交的站内信息
+            /** v6 */
+            'GET /v6/ApiSms-sendRegistSms.htm' => 'v6-ApiSms-sendRegistSms', //发验证码 Tencent
+            'GET /v6/ApiSms-sendSms.htm' => 'v6-ApiSms-sendSms', //发验证码 Tencent
+
             
         ]
     ],
@@ -167,15 +171,15 @@ return $config = [
         'material' => [
             'title' => '素材',
             'subMenu' => [
-                'logo' => [
+                'material_logo' => [
                     'title' => 'LOGO',
                     'url' => 'index.php?a=material&m=index&type=image&st=logo',
                 ],
-                'img' => [
+                'material_img' => [
                     'title' => '小图标',
                     'url' => 'index.php?a=material&m=index&type=image&st=img',
                 ],
-                'box' => [
+                'material_box' => [
                     'title' => '头像框',
                     'url' => 'index.php?a=material&m=index&type=image&st=box',
                 ],
@@ -184,15 +188,15 @@ return $config = [
         'statistics' => [
             'title' => '统计',
             'subMenu' => [
-                'visit' => [
+                'statistics_visit' => [
                     'title' => '访问统计',
                     'url' => 'index.php?a=statistics&m=index&type=visit',
                 ],
-                'action' => [
+                'statistics_action' => [
                     'title' => '模块统计',
                     'url' => 'index.php?a=statistics&m=index&type=action',
                 ],
-                'page' => [
+                'statistics_page' => [
                     'title' => '单页统计',
                     'url' => 'index.php?a=statistics&m=index&type=page',
                 ],

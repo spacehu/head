@@ -20,8 +20,8 @@ class SiteInfomationDAL {
         }
         $sql = "select * "
                 . " from " . $base->table_name("site_infomation") . " "
-                . " where status<2 " . $where . " "
-                . " order by add_time desc limit " . $limit_start . "," . $limit_end . " ;";
+                . " where `status`<2 " . $where . " "
+                . " order by `status` asc,add_time desc limit " . $limit_start . "," . $limit_end . " ;";
         //echo $sql;
         return $base->getFetchAll($sql);
     }
@@ -102,6 +102,18 @@ class SiteInfomationDAL {
     public static function delete($id) {
         $base = new BaseDAL();
         $sql = "update " . $base->table_name('site_infomation') . " set `status`=2  where id=" . $id . " ;";
+        return $base->query($sql);
+    }
+
+    
+    public static function saveSiteInfomationStatus($ids, $data) {
+        if (empty($data)) {
+            return true;
+        }
+        $base = new BaseDAL();
+        // 删除
+        $sql = "update " . $base->table_name('site_infomation') . " set `status`=".$data['status']." where `id` in (" . $ids . ")  ;";
+        //echo $sql;die;
         return $base->query($sql);
     }
 

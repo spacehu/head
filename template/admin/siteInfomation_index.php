@@ -21,6 +21,50 @@ $class = \action\siteInfomation::$data['class'];
                 $('.button_find').click(function () {
                     window.location.href = 'index.php?a=<?php echo $class; ?>&m=index&keywords=' + $('.keywords').val();
                 });
+                $('.button_allow_add').click(function () {
+                    if (ids.length === 0) {
+                        alert("请选择讯息执行该操作");
+                        return;
+                    }
+                    console.log(ids);
+                    //alert("请选择学员执行该操作");
+                    window.location.href = 'index.php?a=<?php echo $class; ?>&m=setEu&ids=' + ids + '&status=1';
+                });
+                $('.button_refuse_add').click(function () {
+                    if (ids.length === 0) {
+                        alert("请选择讯息执行该操作");
+                        return;
+                    }
+                    window.location.href = 'index.php?a=<?php echo $class; ?>&m=setEu&ids=' + ids + '&status=2';
+                });
+                $('.ids').on('click', function () {
+                    if ($(this).attr("checked") == "checked") {
+                        ids[ids.length] = $(this).attr("data-value");
+                    } else {
+                        ids.splice($.inArray($(this).attr("data-value"), ids), 1);
+                        $("#allids").attr("checked", false);
+                    }
+                    //console.log(ids);
+                });
+                $('#allids').click(function () {
+                    var check = 0;
+                    $(".ids").each(function () {
+                        if ($(this).attr("checked") == "checked") {
+                            check++;
+                        }
+                    });
+                    if (check == 0) {
+                        $(".ids").each(function () {
+                            $(this).attr("checked", "checked");
+                            ids[ids.length] = $(this).attr("data-value");
+                        });
+                    } else {
+                        $(".ids").attr("checked", false);
+                        $(this).attr("checked", false);
+                        ids = [];
+                    }
+                    //console.log(ids);
+                });
             });
         </script>
     </head>
@@ -29,10 +73,13 @@ $class = \action\siteInfomation::$data['class'];
         <div class="menu">
             <input type="text" name="keywords" class="keywords" value="<?php echo isset($keywords) ? $keywords : ""; ?>" placeholder="请输入关键字" />
             <a class="button_find " href="javascript:void(0);" >查找</a>
+            <a class="button_allow_add" href="javascript:void(0);">审核通过</a>
+            <a class="button_refuse_add" href="javascript:void(0);">审核不通过</a>
         </div>
         <div class="content">
             <table class="mytable" cellspacing="0" >
                 <tr bgcolor="#656565" style=" font-weight:bold; color:#FFFFFF;">
+                    <td class="td1" width="5%"><input type="checkbox" class="checkbox" id="allids" /></td>
                     <td class="td1" >姓名</td>
                     <td class="td1" >城市</td>
                     <td class="td1" >内容</td>
@@ -46,14 +93,15 @@ $class = \action\siteInfomation::$data['class'];
                     foreach ($data as $v) {
                         ?>
                         <tr<?php if ($sum_i % 2 != 1) { ?>  class="tr2"<?php } ?>>
+                            <td class="td1"><input type="checkbox" class="checkbox ids"  data-value="<?php echo $v['id']; ?>" /></td>
                             <td class="td1"><?php echo $v['name']; ?></td>
                             <td class="td1"><?php echo $v['city']; ?></td>
                             <td class="td1"><?php echo $v['value']; ?></td>
                             <td class="td1"><?php echo ($v['status']==0)?"未审核":"通过审核"; ?></td>
                             <td class="td1"><?php echo $v['add_time']; ?></td>
                             <td class="td1">
-                                <a href="index.php?a=<?php echo $class; ?>&m=updateCustomer&id=<?php echo $v['id']; ?>&status=1">通过</a>
-                                <a href="index.php?a=<?php echo $class; ?>&m=deleteCustomer&id=<?php echo $v['id']; ?>" onclick="return confirm('确定将此客户删除?')">删除</a>
+                                <a href="index.php?a=<?php echo $class; ?>&m=updateSiteInfomation&id=<?php echo $v['id']; ?>&status=1">通过</a>
+                                <a href="index.php?a=<?php echo $class; ?>&m=deleteSiteInfomation&id=<?php echo $v['id']; ?>" onclick="return confirm('确定将此客户删除?')">删除</a>
                             </td>
                         </tr>
                         <?php

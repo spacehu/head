@@ -53,7 +53,7 @@ class siteInfomation {
         \mod\init::getTemplate('admin', $this->class . '_' . __FUNCTION__);
     }
 
-    function getCustomer() {
+    function getSiteInfomation() {
         Common::isset_cookie();
         $id = isset($_GET['id']) ? $_GET['id'] : null;
         try {
@@ -70,7 +70,7 @@ class siteInfomation {
         \mod\init::getTemplate('admin', $this->class . '_' . __FUNCTION__);
     }
 
-    function updateCustomer() {
+    function updateSiteInfomation() {
         Common::isset_cookie();
         $id = isset($_GET['id']) ? $_GET['id'] : null;
         try {
@@ -102,7 +102,7 @@ class siteInfomation {
         }
     }
 
-    function deleteCustomer() {
+    function deleteSiteInfomation() {
         Common::isset_cookie();
         $id = isset($_GET['id']) ? $_GET['id'] : null;
         try {
@@ -112,6 +112,33 @@ class siteInfomation {
             Common::js_redir(Common::getSession($this->class));
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::CATEGORY_DELETE], code::CATEGORY_DELETE, json_encode($ex));
+        }
+    }
+
+    function setEu() {
+        $ids = isset($_GET['ids']) ? $_GET['ids'] : null;
+        try {
+            $_data = [
+                'status' => $_GET['status'],
+            ];
+            SiteInfomationDAL::saveSiteInfomationStatus($ids, $_data);
+            if(!empty($ids)&&$_GET['status']==1){
+                $idlist=explode(',',$ids);
+                foreach($idlist as $k=>$v){
+                    $row=SiteInfomationDAL::getOne($v);
+                    $_mq=[
+                        'type'=>'rpc',
+                        'name'=>$row['sub_type'],
+                        'value'=>json_encode(["action"=>"RpcClient","method"=>"","name"=>$row['name'],"city"=>$row['city'],"value"=>$row['value']],JSON_UNESCAPED_UNICODE),
+                        'add_time'=>date("Y-m-d H:i:s"),
+                        'status'=>0,
+                    ];
+                    MessageQueueDAL::insert($_mq);
+                }
+            }
+            Common::js_redir(Common::getSession($this->class));
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::CATEGORY_UPDATE], code::CATEGORY_UPDATE, json_encode($ex));
         }
     }
 }
