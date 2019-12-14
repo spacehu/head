@@ -53,7 +53,7 @@ class mq {
                             $_data['status']=1;
                             MessageQueueDAL::update($v['id'],$_data);
                         }
-                        sleep(1);
+                        sleep(3);
                     }
                 }
                 sleep(5);
