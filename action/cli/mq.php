@@ -30,6 +30,10 @@ class mq {
     /** 向企业管理员发送邮件的方法 */
     function checkMQ() {
         try {
+            $_conf=json_decode($this->cli_config['cli_config']);
+            //var_dump($_conf);die;
+            $data_sleep=(int)$_conf->data_sleep;
+            $cli_sleep=(int)$_conf->cli_sleep;
             while(true){
                 $_mq = MessageQueueDAL::getAll();
                 //LogDAL::save(date("Y-m-d H:i:s") . "-data", json_encode($_mq));
@@ -58,10 +62,12 @@ class mq {
                             $_data['status']=1;
                             MessageQueueDAL::update($v['id'],$_data);
                         }
-                        sleep(3);
+                        sleep($data_sleep);
+                        //var_dump($data_sleep);
                     }
                 }
-                sleep(5);
+                sleep($cli_sleep);
+                //var_dump($cli_sleep);
             }
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::HOME_INDEX], code::HOME_INDEX, json_encode($ex));
