@@ -16,8 +16,10 @@ class mq {
      * 责任是分担路由的工作
      */
     function __construct($argv) {
-        $this->cli_config=EnterpriseDAL::getByCode($argv[0]);
+        $this->cli_config=EnterpriseDAL::getByCode($argv[1]);
+        //print_r($argv);die;
         LogDAL::save(date("Y-m-d H:i:s") . "-start", "cli");
+        LogDAL::save(date("Y-m-d H:i:s") . "-config-".json_encode($this->cli_config), "cli");
     }
 
     function __destruct() {

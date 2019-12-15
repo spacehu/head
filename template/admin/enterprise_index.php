@@ -81,6 +81,7 @@ $class = \action\enterprise::$data['class'];
                             alert("已经开启");
                         },
                         complete: function (res) {
+                            window.location.href = 'index.php?a=<?php echo $class; ?>&m=index';
                             console.log(res);
                         }
                     });
@@ -97,6 +98,7 @@ $class = \action\enterprise::$data['class'];
                             alert("已经停止");
                         },
                         complete: function (res) {
+                            window.location.href = 'index.php?a=<?php echo $class; ?>&m=index';
                             console.log(res);
                         }
                     });
