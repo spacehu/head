@@ -631,9 +631,9 @@ class init {
     /** 计划任务 *************************************************************************************** */
 
     /** 启动项 */
-    public function cli($action,$mod) {
+    public function cli($action,$mod,$argv) {
         $action = 'action\\cli\\' .$action;
-        $act = new $action();
+        $act = new $action($argv);
         //$actEval = "\$act = new " . $action . "();";
 
         //Common::pr($actEval);die;

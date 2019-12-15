@@ -5,15 +5,18 @@ namespace action\cli;
 use mod\common as Common;
 use TigerDAL\cli\LogDAL;
 use TigerDAL\cli\MessageQueueDAL;
+use TigerDAL\cli\EnterpriseDAL;
 use config\code;
 
 class mq {
-
+    private $cli_status=0;
+    private $cli_config;
     /**
      * 主方法引入父类的基类
      * 责任是分担路由的工作
      */
-    function __construct() {
+    function __construct($argv) {
+        $this->cli_config=EnterpriseDAL::getByCode($argv[0]);
         LogDAL::save(date("Y-m-d H:i:s") . "-start", "cli");
     }
 

@@ -11,6 +11,7 @@ $class = \action\enterprise::$data['class'];
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <script type="text/javascript" src="js/jquery.js"></script>
         <title>无标题文档</title>
     </head>
 
@@ -23,6 +24,7 @@ $class = \action\enterprise::$data['class'];
             <table class="mytable" cellspacing="0" >
                 <tr bgcolor="#656565" style=" font-weight:bold; color:#FFFFFF;">
                     <td class="td1">名称</td>
+                    <td class="td1" width="10%">cli状态</td>
                     <td class="td1" width="10%">状态</td>
                     <td class="td1" width="20%">操作</td>
                 </tr>
@@ -33,6 +35,13 @@ $class = \action\enterprise::$data['class'];
                         ?>
                         <tr<?php if ($sum_i % 2 != 1) { ?>  class="tr2"<?php } ?>>
                             <td class="td1"><?php echo $v['name']; ?></td>
+                            <td class="td1">
+                                <?php if ($v['cli_status'] > 0) {?>
+                                    运行中 <a href="javascript:void(0);" onclick="javascript:stop('<?php echo $v['code']?>')" >停止</a>
+                                <?php } else {?>
+                                    未启动 <a href="javascript:void(0);" onclick="javascript:start('<?php echo $v['code']?>')" >启动</a>
+                                <?php }?>
+                            </td>
                             <td class="td1"><?php
                                 if ($v['delete'] == 0) {
                                     echo '使用中';
@@ -59,5 +68,39 @@ $class = \action\enterprise::$data['class'];
             include_once 'page.php';
             ?>
         </div>
+        <script type="text/javascript">
+                var start=function(code){
+                    var path="./v5/main-socketStart.htm?code="+code;
+                    $.ajax({
+                        url: path,
+                        type: "GET",
+                        data: [],
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            alert("已经开启");
+                        },
+                        complete: function (res) {
+                            console.log(res);
+                        }
+                    });
+                }
+                var stop=function(code){
+                    var path="./v5/main-socketStop.htm?code="+code;
+                    $.ajax({
+                        url: path,
+                        type: "GET",
+                        data: [],
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            alert("已经停止");
+                        },
+                        complete: function (res) {
+                            console.log(res);
+                        }
+                    });
+                }
+        </script>
     </body>
 </html>

@@ -133,6 +133,8 @@ return $config = [
             /** v5 for head & sign */
             'POST /v5/SiteInfomation-add.htm' => 'v5-SiteInfomation-add', //获取前端用户提交的站内信息
             'POST /v5/Sign-add.htm' => 'v5-Sign-add', //获取前端用户提交的站内信息
+            'GET /v5/main-socketStart.htm' => 'v5-main-socketStart', //开启cli
+            'GET /v5/main-socketStop.htm' => 'v5-main-socketStop', //关闭cli
             /** v6 */
             'POST /v6/ApiSms-sendSms.htm' => 'v6-ApiSms-sendSms', //发验证码 LinYu
             'GET /v6/ApiSms-getSms.htm' => 'v6-ApiSms-getSms', //获取短信供应商信息 LinYu

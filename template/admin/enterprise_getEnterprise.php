@@ -60,6 +60,18 @@ $list = \action\enterprise::$data['list'];
                         <div class="leftAlist" >
                             <input class="text" name="secret" type="text" value="<?php echo isset($data['secret']) ? $data['secret'] : ""; ?>" /><span class="red"> * </span>
                         </div>
+                        <div class="leftAlist" >
+                            <span>CLI STATUS 进程状态</span>
+                        </div>
+                        <div class="leftAlist" >
+                            <input class="text" name="cli_status" type="text" value="<?php echo isset($data['cli_status']) ? $data['cli_status'] : "0"; ?>" /><span class="red"> * </span>
+                        </div>
+                        <div class="leftAlist" >
+                            <span>CLI CONFIG 进程配置{"data_sleep":"3","cli_sleep":"5"}</span>
+                        </div>
+                        <div class="leftAlist" >
+                            <textarea class="text" name="cli_config" ><?php echo isset($data['cli_config']) ? $data['cli_config'] : ""; ?></textarea><span class="red"> * </span>
+                        </div>
                     </div>
                 </div>
                 <div class="pathB">

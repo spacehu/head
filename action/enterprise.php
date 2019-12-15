@@ -71,6 +71,8 @@ class enterprise {
                     'address' => $_POST['address'],
                     'appid' => $_POST['appid'],
                     'secret' => $_POST['secret'],
+                    'cli_status' => $_POST['cli_status'],
+                    'cli_config' => $_POST['cli_config'],
                 ];
                 self::$data = EnterpriseDAL::update($id, $data);
             } else {
@@ -95,6 +97,8 @@ class enterprise {
                     'user_id' => 0,
                     'appid' => $_POST['appid'],
                     'secret' => $_POST['secret'],
+                    'cli_status' => $_POST['cli_status'],
+                    'cli_config' => $_POST['cli_config'],
                 ];
                 self::$data = EnterpriseDAL::insert($data);
             }
