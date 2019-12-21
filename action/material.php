@@ -48,8 +48,8 @@ class material {
             self::$data['st'] = $st;
 
             if ($type == 'image') {
-                self::$data['total'] = ImageDAL::getTotal($keywords, $st);
-                self::$data['data'] = ImageDAL::getAll($currentPage, 9, $keywords, $st);
+                self::$data['total'] = ImageDAL::getTotal($this->enterprise_id,$keywords, $st);
+                self::$data['data'] = ImageDAL::getAll($currentPage, $pagesize,$this->enterprise_id, $keywords, $st);
 //                self::$data['imgsrc'] = ImageDAL::getOne(self::$data['data']['id']);
             } else if ($type == 'music' || $type == 'video') {
                 self::$data['data'] = MediaDAL::getAll($currentPage, $pagesize, $keywords, $type);
@@ -302,21 +302,24 @@ class material {
     /** 内部调用 */
     function _saveImage($filePath) {
         try {
-            $filePath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $filePath);
-            $unique = '';
+            //$filePath = str_replace($_SERVER['DOCUMENT_ROOT'], '', $filePath);
+            $unique = md5($filePath);
             //Common::pr(UserDAL::getUser($_POST['name']));die;
             $data = [
                 'name' => $filePath,
                 'original_src' => $filePath,
                 'original_link' => "",
                 'order_by' => 50,
-                'add_by' => 0,
+                'add_by' => Common::getSession("id"),
                 'add_time' => date("Y-m-d H:i:s"),
-                'edit_by' => 0,
+                'edit_by' => Common::getSession("id"),
                 'edit_time' => date("Y-m-d H:i:s"),
                 'delete' => 0,
                 'unique' => $unique,
+                'enterprise_id'=>$this->enterprise_id,
+                'st'=>'material',
             ];
+            //Common::pr($data);
             return ImageDAL::insert_return_id($data);
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::MATERIAL_UPDATE], code::MATERIAL_UPDATE, json_encode($ex));

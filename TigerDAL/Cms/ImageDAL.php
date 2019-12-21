@@ -7,11 +7,14 @@ use TigerDAL\BaseDAL;
 class ImageDAL {
 
     /** 获取用户信息列表 */
-    public static function getAll($currentPage, $pagesize, $keywords,$st="") {
+    public static function getAll($currentPage, $pagesize,$enterprise_id, $keywords,$st="") {
         $base = new BaseDAL();
         $limit_start = ($currentPage - 1) * $pagesize;
         $limit_end = $pagesize;
         $where = "";
+        if (!empty($enterprise_id)) {
+            $where .= " and enterprise_id= '".$enterprise_id."' ";
+        }
         if (!empty($keywords)) {
             $where .= " and name like '%" . $keywords . "%' ";
         }
@@ -23,9 +26,12 @@ class ImageDAL {
     }
 
     /** 获取数量 */
-    public static function getTotal($keywords,$st="") {
+    public static function getTotal($enterprise_id,$keywords,$st="") {
         $base = new BaseDAL();
         $where = "";
+        if (!empty($enterprise_id)) {
+            $where .= " and enterprise_id= '".$enterprise_id."' ";
+        }
         if (!empty($keywords)) {
             $where .= " and name like '%" . $keywords . "%' ";
         }
@@ -72,6 +78,7 @@ class ImageDAL {
             }
             $set = implode(',', $_data);
             $sql = "insert into " . $base->table_name('image') . " values (null," . $set . ");";
+            //echo $sql;die;
             return $base->query($sql);
         } else {
             return true;

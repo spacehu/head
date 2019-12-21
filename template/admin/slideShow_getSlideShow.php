@@ -1,14 +1,6 @@
 <?php
 $data = \action\slideShow::$data['data'];
-$image = \action\slideShow::$data['image'];
 $config = \action\slideShow::$data['config'];
-if (is_array($image)) {
-    foreach ($image as $k => $v) {
-        if ($data['image_id'] == $v['id']) {
-            $original_src = $v['original_src'];
-        }
-    }
-}
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -34,12 +26,12 @@ if (is_array($image)) {
                         <div class="leftAlist" >
                             <div class="r_row">
                                 <INPUT TYPE="file" NAME="file_url" id="f1" />
-                                <input type="hidden" name="edit_doc" id="edit_doc" value="<?php echo isset($original_src) ? $original_src : './img/no_img.jpg'; ?>" />
+                                <input type="hidden" name="edit_doc" id="edit_doc" value="<?php echo isset($data['original_src']) ? $data['original_src'] : './img/no_img.jpg'; ?>" />
                             </div>
                             <div class="r_row">
                                 <div class="r_title">&nbsp;</div>
-                                <img class="r_row_img" src="<?php echo isset($original_src) ? $original_src : './img/no_img.jpg'; ?>" />
-                            </div
+                                <img class="r_row_img" src="<?php echo isset($data['original_src']) ? $data['original_src'] : './img/no_img.jpg'; ?>" />
+                            </div>
                         </div>
                         <div class="leftAlist" >
                             <span>LINK 链接</span>

@@ -6,15 +6,27 @@ use mod\common as Common;
 use TigerDAL;
 use TigerDAL\Cms\ImageDAL;
 use TigerDAL\Cms\SlideShowDAL;
+use TigerDAL\Cms\EnterpriseDAL;
 use config\code;
 
 class slideShow {
 
     private $class;
     public static $data;
+    private $enterprise_id;
 
     function __construct() {
         $this->class = str_replace('action\\', '', __CLASS__);
+        try {
+            $_enterprise = EnterpriseDAL::getByUserId(Common::getSession("id"));
+            if (!empty($_enterprise)) {
+                $this->enterprise_id = $_enterprise['id'];
+            } else {
+                $this->enterprise_id = '';
+            }
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::CATEGORY_INDEX], code::CATEGORY_INDEX, json_encode($ex));
+        }
     }
 
     function staticPage() {
@@ -34,8 +46,8 @@ class slideShow {
             self::$data['pagesize'] = $pagesize;
             self::$data['class'] = $this->class;
 
-            self::$data['data'] = SlideShowDAL::getAll($currentPage, $pagesize);
-            self::$data['total'] = SlideShowDAL::getTotal();
+            self::$data['data'] = SlideShowDAL::getAll($currentPage, $pagesize,$this->enterprise_id);
+            self::$data['total'] = SlideShowDAL::getTotal($this->enterprise_id);
 
             \mod\init::getTemplate('admin', $this->class . '_' . __FUNCTION__);
         } catch (Exception $ex) {
@@ -52,9 +64,8 @@ class slideShow {
             } else {
                 self::$data['data'] = null;
             }
-            self::$data['image'] = ImageDAL::getAll(1, 999, '');
             self::$data['config'] = \mod\init::$config['env'];
-            //Common::pr(self::$data['list']);die;
+            //Common::pr(self::$data['data']);die;
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::SYSTEM_INDEX], code::SYSTEM_INDEX, json_encode($ex));
         }
@@ -89,6 +100,8 @@ class slideShow {
                     'edit_by' => Common::getSession("id"),
                     'edit_time' => date("Y-m-d H:i:s"),
                     'delete' => 0,
+                    'enterprise_id' => $this->enterprise_id,
+                    'status' => 0,
                 ];
                 self::$data = SlideShowDAL::insert($data);
             }
@@ -113,6 +126,29 @@ class slideShow {
             Common::js_redir(Common::getSession($this->class));
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::SYSTEM_DELETE], code::SYSTEM_DELETE, json_encode($ex));
+        }
+    }
+
+    function updateSlideShowStatus() {
+        $id = isset($_GET['id']) ? $_GET['id'] : null;
+        try {
+            if ($id != null) {
+                /** 更新操作 */
+                $data = [
+                    'order_by' => isset($_POST['order_by']) ? $_POST['order_by'] : 50,
+                    'edit_by' => Common::getSession("id"),
+                    'status' => $_GET['status'],
+                ];
+                self::$data = SlideShowDAL::update($id, $data);
+            } 
+            if (self::$data) {
+                //Common::pr(Common::getSession($this->class));die;
+                Common::js_redir(Common::getSession($this->class));
+            } else {
+                Common::js_alert('修改失败，请联系系统管理员');
+            }
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::SYSTEM_UPDATE], code::SYSTEM_UPDATE, json_encode($ex));
         }
     }
 

@@ -24,53 +24,22 @@ class ApiPonant extends \action\RestfulApi {
         }
     }
 
-    /** 异步 */
-    function sendSms() {
-        $phone = !empty($this->get['phone']) ? $this->get['phone'] : 0;
+    /** 
+     * 校验bin码
+     * 维度bin码
+     */
+    function checkBin() {
         try {
-            if (empty($phone)) {
-                TigerDAL\CatchDAL::markError(code::$code[code::API_ENUM], code::API_ENUM, json_encode('phone empty'));
+            if(empty($this->get['bin'])){
                 self::$data['success'] = false;
-                self::$data['data']['code'] = "phone empty";
-                self::$data['msg'] = code::$code['phoneerror'];
-                return self::$data;
+                self::$data['data']['code'] = 'emptybin';
+                self::$data['msg'] = 'bin码不能为空';
+                return false;
             }
-            $code = rand(100000, 999999);
-            //判斷是否可以發送
-            //插入发送记录
-            $access = new AccessDAL();
-            $data = [
-                'phone' => $phone,
-                'date' => date("Ymd"),
-                'code' => $code,
-                'bizid' => '',
-                'add_time' => date("Y-m-d H:i:s", time()),
-                'success' => false,
-                'ip' => $access->getIP(),
-            ];
-            //Common::pr($data);
-            $orderid = LinYuSmsDAL::insert($data);
-            //使用模版
-            $content=\mod\init::$config['env']['linyu']['content']($code);
-            //发送信息
-            $response = LinYuSmsDAL::sendSms($phone, $content);
-            //记录成功
-            //Common::pr($response);die;
-            if($response['returnstatus']=="Success"){
-                $_data = [
-                    'bizid' => $response['taskID'],
-                    'success' => 1,
-                ];
-                self::$data['data'] = LinYuSmsDAL::update($orderid, $_data);
-            }else if($response['returnstatus']=="Faild"){
-                $_data = [
-                    'bizid' => $response['taskID'],
-                    'success' => 0,
-                ];
-                LogDAL::save(date("Y-m-d H:i:s") . "-sms-faild--" . json_encode($response) . "");
-                self::$data['data'] = LinYuSmsDAL::update($orderid, $_data);
-            }else{
-                LogDAL::save(date("Y-m-d H:i:s") . "-sms-else--" . json_encode($response) . "");
+            $bin=$this->get['bin'];
+            if($bin==\mod\init::$config['env']['data']['bin']){
+                self::$data['data']['code'] = 'successbin';
+                self::$data['msg'] = '校验成功';
             }
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::API_ENUM], code::API_ENUM, json_encode($ex));
@@ -81,8 +50,15 @@ class ApiPonant extends \action\RestfulApi {
         return self::$data;
     }
 
-    /** 异步 */
-    function getSms() {
+    /** 
+     * 保存用户信息 
+     * 维度
+     * name
+     * phone
+     * card
+     * time
+     */
+    function saveUserInfo() {
         try {
             $response = LinYuSmsDAL::getSmsInfo();
             echo "查询短信发送情况(querySendDetails)接口返回的结果:\n";

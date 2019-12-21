@@ -140,7 +140,8 @@ return $config = [
             'GET /v6/ApiSms-getSms.htm' => 'v6-ApiSms-getSms', //获取短信供应商信息 LinYu
             'GET /v6/ApiWeChat-getWeChatInfo.htm' => 'v6-ApiWeChat-getWeChatInfo', //需要用户主动授权
             'GET /v6/ApiWeChat-getWeChatOpenId.htm' => 'v6-ApiWeChat-getWeChatOpenId', //静默授权
-
+            'GET /v6/ApiPonant-checkBin.htm' => 'v6-ApiPonant-checkBin', //
+            
             
         ]
     ],
