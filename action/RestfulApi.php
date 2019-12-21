@@ -14,6 +14,7 @@ use TigerDAL\AccessDAL;
 use config\code;
 use TigerDAL\Web\StatisticsDAL;
 use TigerDAL\Api\LogDAL;
+use TigerDAL\Api\EnterpriseDAL;
 
 class RestfulApi {
 
@@ -26,6 +27,7 @@ class RestfulApi {
     public $header;
     public $post;
     public $get;
+    public $enterprise_id;
 
     /**
      * 整理路由的方法
@@ -38,6 +40,18 @@ class RestfulApi {
         $this->post = Common::exchangePost();
         $this->get = Common::exchangeGet();
         $this->insertStatistics($_SERVER);
+        try {
+            if(!empty($this->get['eCode'])){
+                $_enterprise = EnterpriseDAL::getByCode($this->get['eCode']);
+                if (!empty($_enterprise)) {
+                    $this->enterprise_id = $_enterprise['id'];
+                } else {
+                    $this->enterprise_id = '';
+                }
+            }
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::CATEGORY_INDEX], code::CATEGORY_INDEX, json_encode($ex));
+        }
         if (\mod\init::$config['restful_api']['isopen']) {
             try {
                 LogDAL::save(date("Y-m-d H:i:s") . "-------------------------------------" . $this->_path . "", "DEBUG");

@@ -7,8 +7,9 @@ use TigerDAL;
 use TigerDAL\AccessDAL;
 use config\code;
 use TigerDAL\Api\LogDAL;
+use TigerDAL\Api\ImageDAL;
 
-class ApiPonant extends \action\RestfulApi {
+class ApiMaterial extends \action\RestfulApi {
 
     /**
      * 主方法引入父类的基类
@@ -28,19 +29,20 @@ class ApiPonant extends \action\RestfulApi {
      * 校验bin码
      * 维度bin码
      */
-    function checkBin() {
+    function getMaterialList() {
         try {
-            if(empty($this->get['bin'])){
+            if(empty($this->get['st'])){
                 self::$data['success'] = false;
-                self::$data['data']['code'] = 'emptybin';
-                self::$data['msg'] = 'bin码不能为空';
-                return false;
+                self::$data['data']['code'] = 'emptyst';
+                self::$data['msg'] = '类型码不能为空';
+                return self::$data;
             }
-            $bin=$this->get['bin'];
-            if($bin==\mod\init::$config['env']['data']['bin']){
-                self::$data['data']['code'] = 'successbin';
-                self::$data['msg'] = '校验成功';
-            }
+            $currentPage = isset($this->get['currentPage']) ? $this->get['currentPage'] : 1;
+            $pagesize = isset($this->get['pagesize']) ? $this->get['pagesize'] : \mod\init::$config['page_width'];
+            $st=$this->get['st'];
+            $enterprise_id=$this->enterprise_id;
+            self::$data['data']['list'] = ImageDAL::getAll($currentPage, $pagesize,$enterprise_id, $st);
+            self::$data['data']['total'] = ImageDAL::getTotal($this->enterprise_id, $st);
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::API_ENUM], code::API_ENUM, json_encode($ex));
             self::$data['success'] = false;
@@ -49,5 +51,4 @@ class ApiPonant extends \action\RestfulApi {
         }
         return self::$data;
     }
-
 }

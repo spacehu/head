@@ -33,12 +33,9 @@ class ApiWeChat extends \action\RestfulApi {
     function __construct() {
         $path = parent::__construct();
         $this->class = str_replace('action\\', '', __CLASS__);
- 
-        $this->get = Common::exchangeGet();
-        $this->header = Common::exchangeHeader();
-
-        if(!empty($this->get['enterprise_id'])){
-            $_enterprise=EnterpriseDAL::getOne($this->get['enterprise_id']);
+        
+        if(!empty($this->enterprise_id)){
+            $_enterprise=EnterpriseDAL::getOne($this->enterprise_id);
             $this->appid = $_enterprise['appid'];
             $this->appsecret  = $_enterprise['secret'];
         }else{

@@ -140,7 +140,15 @@ return $config = [
             'GET /v6/ApiSms-getSms.htm' => 'v6-ApiSms-getSms', //获取短信供应商信息 LinYu
             'GET /v6/ApiWeChat-getWeChatInfo.htm' => 'v6-ApiWeChat-getWeChatInfo', //需要用户主动授权
             'GET /v6/ApiWeChat-getWeChatOpenId.htm' => 'v6-ApiWeChat-getWeChatOpenId', //静默授权
+            /** 邮轮项目 废弃 */
             'GET /v6/ApiPonant-checkBin.htm' => 'v6-ApiPonant-checkBin', //
+            /** v6 头像项目 */
+            'GET /v6/ApiMaterial-getMaterialList.htm' => 'v6-ApiMaterial-getMaterialList', //读取素材
+            'GET /v6/ApiBase-getCos.htm' => 'v6-ApiBase-getCos', //读取cos令牌
+            'GET /v6/ApiPonant-checkBin.htm' => 'v6-ApiPonant-checkBin', //上传头像url
+            'GET /v6/ApiPonant-checkBin.htm' => 'v6-ApiPonant-checkBin', //获取广告位
+            'GET /v6/ApiPonant-checkBin.htm' => 'v6-ApiPonant-checkBin', //请求广告位链接
+
             
             
         ]
