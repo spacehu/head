@@ -145,9 +145,9 @@ return $config = [
             /** v6 头像项目 */
             'GET /v6/ApiMaterial-getMaterialList.htm' => 'v6-ApiMaterial-getMaterialList', //读取素材
             'GET /v6/ApiBase-getCos.htm' => 'v6-ApiBase-getCos', //读取cos令牌
-            'GET /v6/ApiPonant-checkBin.htm' => 'v6-ApiPonant-checkBin', //上传头像url
-            'GET /v6/ApiPonant-checkBin.htm' => 'v6-ApiPonant-checkBin', //获取广告位
-            'GET /v6/ApiPonant-checkBin.htm' => 'v6-ApiPonant-checkBin', //请求广告位链接
+            'POST /v6/ApiCustomer-headImage.htm' => 'v6-ApiCustomer-headImage', //上传头像url
+            'GET /v6/ApiBase-slideShow.htm' => 'v6-ApiBase-slideShow', //获取广告位
+            'POST /v6/ApiBase-slideShow.htm' => 'v6-ApiBase-saveClickSlideShow', //请求广告位链接
 
             
             

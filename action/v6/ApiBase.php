@@ -8,6 +8,7 @@ use TigerDAL\Api\ImageDAL;
 use TigerDAL\Cms\CategoryDAL;
 use TigerDAL\Cms\SystemDAL;
 use TigerDAL\Api\ArticleDAL;
+use TigerDAL\Api\SlideShowDAL;
 use config\code;
 
 class ApiBase extends \action\RestfulApi {
@@ -59,6 +60,32 @@ class ApiBase extends \action\RestfulApi {
             // 获取临时密钥，计算签名
             $tempKeys = $sts->getTempKeys($config);
             self::$data['data']['info'] = $tempKeys;
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::HOME_INDEX], code::HOME_INDEX, json_encode($ex));
+        }
+        return self::$data;
+    }
+    
+    /** 获取广告位 */
+    function slideShow(){
+        try {
+            //轮播列表
+            $SlideShowDAL = new SlideShowDAL();
+            $res = $SlideShowDAL->GetSlideShow(1, 20,$this->enterprise_id);
+            //print_r($res);die;
+            self::$data['data']['total'] = $res['total'];
+            self::$data['data']['list'] = $res['data'];
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::HOME_INDEX], code::HOME_INDEX, json_encode($ex));
+        }
+        return self::$data;
+    }
+    
+    /** 记录广告位点击 */
+    public function saveClickSlideShow(){
+        try {
+            $id=$this->get['id'];
+            self::$data['data']['info']=$id;
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::HOME_INDEX], code::HOME_INDEX, json_encode($ex));
         }
