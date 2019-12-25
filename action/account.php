@@ -5,15 +5,27 @@ namespace action;
 use mod\common as Common;
 use TigerDAL;
 use TigerDAL\Cms\UserDAL;
+use TigerDAL\Cms\EnterpriseDAL;
 use config\code;
 
 class account {
 
     private $class;
     public static $data;
+    private $enterprise_id;
 
     function __construct() {
         $this->class = str_replace('action\\', '', __CLASS__);
+        try {
+            $_enterprise = EnterpriseDAL::getByUserId(Common::getSession("id"));
+            if (!empty($_enterprise)) {
+                $this->enterprise_id = $_enterprise['id'];
+            } else {
+                $this->enterprise_id = '';
+            }
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::CATEGORY_INDEX], code::CATEGORY_INDEX, json_encode($ex));
+        }
     }
 
     function index() {
@@ -30,6 +42,7 @@ class account {
             } else {
                 self::$data['data'] = null;
             }
+            self::$data['enterprise']=EnterpriseDAL::getOne($this->enterprise_id);
         } catch (Exception $ex) {
             TigerDAL\CatchDAL::markError(code::$code[code::USER_INDEX], code::USER_INDEX, json_encode($ex));
         }
@@ -39,7 +52,16 @@ class account {
     function updateAccount() {
         Common::isset_cookie();
         $id = Common::getSession("id");
+        //Common::pr($_POST);die;
         try {
+            $_eData=[
+                'qrcode_status'=>$_POST['qrcode_status'],
+                'edit_time' => date("Y-m-d H:i:s"),
+            ];
+            EnterpriseDAL::update($this->enterprise_id,$_eData);
+            if(empty($_POST['password'])){
+                Common::js_redir(Common::getSession($this->class));
+            }
             if ($_POST['password'] !== $_POST['password_cfn']) {
                 Common::js_alert(code::$code['errorPasswordDifferent']);
                 TigerDAL\CatchDAL::markError(code::$code[code::$code['errorPasswordDifferent']], code::$code['errorPasswordDifferent'], json_encode($_POST));

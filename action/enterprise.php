@@ -99,6 +99,7 @@ class enterprise {
                     'secret' => $_POST['secret'],
                     'cli_status' => $_POST['cli_status'],
                     'cli_config' => $_POST['cli_config'],
+                    'qrcode_status' => isset($_POST['qrcode_status']) ? $_POST['qrcode_status']:"",
                 ];
                 self::$data = EnterpriseDAL::insert($data);
             }

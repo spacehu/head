@@ -66,39 +66,13 @@ class EnterpriseDAL {
     /** 新增用户信息 */
     public static function insert($data) {
         $base = new BaseDAL();
-        if (is_array($data)) {
-            foreach ($data as $v) {
-                if (is_numeric($v)) {
-                    $_data[] = " " . $v . " ";
-                } else {
-                    $_data[] = " '" . $v . "' ";
-                }
-            }
-            $set = implode(',', $_data);
-            $sql = "insert into " . $base->table_name('enterprise') . " values (null," . $set . ");";
-            return $base->query($sql);
-        } else {
-            return true;
-        }
+        return $base->insert($data,'enterprise');
     }
 
     /** 更新用户信息 */
     public static function update($id, $data) {
         $base = new BaseDAL();
-        if (is_array($data)) {
-            foreach ($data as $k => $v) {
-                if (is_numeric($v)) {
-                    $_data[] = " `" . $k . "`=" . $v . " ";
-                } else {
-                    $_data[] = " `" . $k . "`='" . $v . "' ";
-                }
-            }
-            $set = implode(',', $_data);
-            $sql = "update " . $base->table_name('enterprise') . " set " . $set . "  where id=" . $id . " ;";
-            return $base->query($sql);
-        } else {
-            return true;
-        }
+        return $base->update($id,$data,'enterprise');
     }
 
     /** 删除用户信息 */

@@ -1,5 +1,6 @@
 <?php
 $data = \action\account::$data['data'];
+$enterprise=\action\account::$data['enterprise'];
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -27,6 +28,17 @@ $data = \action\account::$data['data'];
                                 <input class="text" name="password_cfn" type="password" value="" />
                             </div>
                         </div>
+                        <?php if(!empty($enterprise)){?>
+                            <div class="leftAlist" >
+                                <span>QRCODE 头像系统二维码开关</span>
+                            </div>
+                            <div class="leftAlist" >
+                                <div class="r_row">
+                                    <input type="radio" name="qrcode_status" value="0" <?php echo (!isset($enterprise['qrcode_status'])||$enterprise['qrcode_status']==0)?"checked":"";?> />：关
+                                    <input type="radio" name="qrcode_status" value="1" <?php echo (isset($enterprise['qrcode_status'])&&$enterprise['qrcode_status']==1)?"checked":"";?> />：开
+                                </div>
+                            </div>
+                        <?php }?>
                     </div>
                 </div>
                 <div class="pathB">

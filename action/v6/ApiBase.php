@@ -9,6 +9,7 @@ use TigerDAL\Cms\CategoryDAL;
 use TigerDAL\Cms\SystemDAL;
 use TigerDAL\Api\ArticleDAL;
 use TigerDAL\Api\SlideShowDAL;
+use TigerDAL\Api\EnterpriseDAL;
 use config\code;
 
 class ApiBase extends \action\RestfulApi {
@@ -91,4 +92,22 @@ class ApiBase extends \action\RestfulApi {
         }
         return self::$data;
     }
+
+    /** 获取二维码状态 */
+    function qrcodeStatus(){
+        try {
+            //轮播列表
+            $res = EnterpriseDAL::getOne($this->enterprise_id);
+            //print_r($res);die;
+            if(empty($res)){
+                self::$data['data']['info']='0';
+                return self::$data;
+            }
+            self::$data['data']['info'] = $res['qrcode_status'];
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::HOME_INDEX], code::HOME_INDEX, json_encode($ex));
+        }
+        return self::$data;
+    }
+
 }

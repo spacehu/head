@@ -148,6 +148,7 @@ return $config = [
             'POST /v6/ApiCustomer-headImage.htm' => 'v6-ApiCustomer-headImage', //上传头像url
             'GET /v6/ApiBase-slideShow.htm' => 'v6-ApiBase-slideShow', //获取广告位
             'POST /v6/ApiBase-slideShow.htm' => 'v6-ApiBase-saveClickSlideShow', //请求广告位链接
+            'GET /v6/ApiBase-qrcodeStatus.htm' => 'v6-ApiBase-qrcodeStatus', //获取企业二维码开启状态
 
             
             
