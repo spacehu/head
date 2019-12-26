@@ -35,6 +35,14 @@ class admin {
 
     function main_right() {
         Common::isset_cookie();
+        $id = Common::getSession("id");
+        try {
+            self::$data['data'] = UserDAL::getOne($id);
+            self::$data['data']['role'] = RoleDAL::getOne(self::$data['data']['role_id']);
+            self::$data['data']['enterprise'] = EnterpriseDAL::getOne(self::$data['data']['enterprise_id']);
+        } catch (Exception $ex) {
+            TigerDAL\CatchDAL::markError(code::$code[code::USER_INDEX], code::USER_INDEX, json_encode($ex));
+        }
         \mod\init::getTemplate('admin', 'right', false);
     }
 
