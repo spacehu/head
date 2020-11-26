@@ -96,11 +96,25 @@ $class = \action\siteInfomation::$data['class'];
                             <td class="td1"><input type="checkbox" class="checkbox ids"  data-value="<?php echo $v['id']; ?>" /></td>
                             <td class="td1"><?php echo $v['name']; ?></td>
                             <td class="td1"><?php echo $v['city']; ?></td>
-                            <td class="td1"><?php echo $v['value']; ?></td>
-                            <td class="td1"><?php echo ($v['status']==0)?"未审核":"通过审核"; ?></td>
+                            <td class="td1">
+                                <?php if($v['sub_type']=='blessing'){?>
+                                    <?php echo $v['value'];?>
+                                <?php }else if($v['sub_type']=='link'){?>
+                                    <audio src="<?php echo $v['value']; ?>" controls preload ></audio>
+                                <?php }?>
+                            </td>
+                            <td class="td1">
+                                <?php if($v['sub_type']=='blessing'){?>
+                                    <?php echo ($v['status']==0)?"未审核":"通过审核"; ?>    
+                                <?php }else if($v['sub_type']=='link'){?>
+                                    <a target="_blank" href="<?php echo $v['value']; ?>">下载</a>
+                                <?php }?>
+                            </td>
                             <td class="td1"><?php echo $v['add_time']; ?></td>
                             <td class="td1">
-                                <a href="index.php?a=<?php echo $class; ?>&m=updateSiteInfomation&id=<?php echo $v['id']; ?>&status=1">通过</a>
+                                <?php if($v['sub_type']=='blessing'){?>
+                                    <a href="index.php?a=<?php echo $class; ?>&m=updateSiteInfomation&id=<?php echo $v['id']; ?>&status=1">通过</a>
+                                <?php }?>
                                 <a href="index.php?a=<?php echo $class; ?>&m=deleteSiteInfomation&id=<?php echo $v['id']; ?>" onclick="return confirm('确定将此客户删除?')">删除</a>
                             </td>
                         </tr>

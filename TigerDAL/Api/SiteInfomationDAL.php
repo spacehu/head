@@ -9,7 +9,7 @@ class SiteInfomationDAL {
 
 
     /** 新增用户信息 */
-    public function add($enterprise_id,$name,$city,$value) {
+    public function add($enterprise_id,$name,$city,$value,$type=null,$sub_type=null) {
         $data=[
             'type'=>'1',
             'sub_type'=>'blessing',
@@ -22,6 +22,12 @@ class SiteInfomationDAL {
             'city'=>$city,
             'status'=>'0',
         ];
+        if(!empty($type)){
+            $data['type']=$type;
+        }
+        if(!empty($sub_type)){
+            $data['sub_type']=$sub_type;
+        }
         return cmsSiteInfomationDAL::insert($data);
     }
 

@@ -30,8 +30,10 @@ class SiteInfomation extends \action\RestfulApi {
             $name = Common::specifyChar($this->post['name']);
             $city = Common::specifyChar($this->post['city']);
             $value = Common::specifyChar($this->post['value']);
+            $type = Common::specifyChar(!empty($this->post['type'])?$this->post['type']:null);
+            $sub_type = Common::specifyChar(!empty($this->post['sub_type'])?$this->post['sub_type']:null);
             $SiteInfomationDAL = new SiteInfomationDAL();
-            $check = $SiteInfomationDAL->add($enterprise_id,$name,$city,$value);
+            $check = $SiteInfomationDAL->add($enterprise_id,$name,$city,$value,$type,$sub_type);
             if ($check !== true) {
                 self::$data['success'] = false;
                 self::$data['data']['code'] = $check;
